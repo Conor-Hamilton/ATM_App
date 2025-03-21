@@ -11,6 +11,10 @@ class Account(ABC):
         if not self._verify_pin(pin):
             raise ValueError("Invalid pin. Transaction failed")
 
+    def _verify_pin(self, pin):
+        return pin == self.pin
+    
+
     def deposit(self, pin, amount):
         self._require_pin(pin)
 
@@ -42,14 +46,5 @@ class Account(ABC):
     def check_balance(self, pin):
         self._require_pin(pin)
 
-    # Returns the balance of the account if pin is correct
-
-        pass
-
-    def _verify_pin(self, pin):
-        return pin == self.pin
-    
-    # Verifies the pin by cross-checking with the account's current pin
-    
-
-     
+        print(f"Account balance for {self.account_holder} is £{self.balance}")
+        return self.balance
