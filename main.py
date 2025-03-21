@@ -7,9 +7,12 @@ class Account(ABC):
         self.balance = balance
         self.account_type = account_type
 
-    def deposit(self, pin, amount):
+    def _require_pin(self, pin):
         if not self._verify_pin(pin):
             raise ValueError("Invalid pin. Transaction failed")
+
+    def deposit(self, pin, amount):
+        self._require_pin(pin)
 
         if amount <= 0:
             raise ValueError("Invalid amount. Transaction failed")
@@ -21,8 +24,7 @@ class Account(ABC):
 
 
     def withdraw(self, pin, amount):
-        if not self._verify_pin(pin):
-            raise ValueError("Invalid pin. Transaction failed")
+        self._require_pin(pin)
         
         if amount <= 0:
             raise ValueError("Invalid amount. Transaction failed")
@@ -38,8 +40,7 @@ class Account(ABC):
 
 
     def check_balance(self, pin):
-        if not self._verify_pin(pin):
-            raise ValueError("Invalid pin. Transaction failed")
+        self._require_pin(pin)
 
     # Returns the balance of the account if pin is correct
 
